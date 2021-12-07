@@ -2,7 +2,6 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.6.0'
     id 'maven-publish'
     id 'jacoco'
-    id 'application'
 }
 
 group 'rip.deadcode.request-viewer'
@@ -52,6 +51,18 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "17"
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'rip.deadcode.request_viewer.MainKt'
+        )
+    }
+
+    // Fat jar
+    from { configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    duplicatesStrategy(DuplicatesStrategy.INCLUDE)
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -109,8 +120,4 @@ publishing {
             artifact javadocJar
         }
     }
-}
-
-application {
-    mainClass = 'rip.deadcode.request_viewer.MainKt'
 }
