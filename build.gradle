@@ -2,6 +2,7 @@ plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.6.0'
     id 'maven-publish'
     id 'jacoco'
+    id 'application'
 }
 
 group 'rip.deadcode.request-viewer'
@@ -108,4 +109,8 @@ publishing {
             artifact javadocJar
         }
     }
+}
+
+application {
+    mainClass = 'rip.deadcode.request_viewer.MainKt'
 }
